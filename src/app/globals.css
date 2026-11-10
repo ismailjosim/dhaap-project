@@ -1,26 +1,271 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@custom-variant dark (&:is(.dark *));
+
+/* ---------- 1. Raw palette (gives you bg-sand-100, text-terracotta-700 ...) ---------- */
+@theme {
+  /* Sand — warm neutrals (surfaces, borders, muted text) */
+  --color-sand-50: #fbf7f0;
+  --color-sand-100: #f5ebdd; /* logo background */
+  --color-sand-200: #e7d9c4;
+  --color-sand-300: #d2bfa5;
+  --color-sand-400: #a89a8b;
+  --color-sand-500: #85766a;
+  --color-sand-600: #6b5b4e;
+  --color-sand-700: #4b3f36;
+  --color-sand-800: #3a332c;
+  --color-sand-900: #24201c;
+  --color-sand-950: #1b1815;
+
+  /* Terracotta — brand (700 = logo color) */
+  --color-terracotta-50: #fff7ed;
+  --color-terracotta-100: #fbe5d6;
+  --color-terracotta-200: #fed7aa;
+  --color-terracotta-300: #fdba74;
+  --color-terracotta-400: #f58a55;
+  --color-terracotta-500: #f06a2e;
+  --color-terracotta-600: #e2551f;
+  --color-terracotta-700: #c2410c; /* logo stairs */
+  --color-terracotta-800: #9a3412;
+  --color-terracotta-900: #7c2d12;
+
+  /* Ink — charcoal (logo dot) */
+  --color-ink: #1f2937;
+  --color-ink-soft: #374151;
 }
 
+/* ---------- 2. Semantic tokens: LIGHT ---------- */
+:root {
+  --radius: 0.75rem;
+
+  /* Surfaces */
+  --background: #fbf7f0;
+  --foreground: #1f2937;
+  --card: #fffdf9;
+  --card-foreground: #1f2937;
+  --popover: #fffdf9;
+  --popover-foreground: #1f2937;
+
+  /* Brand */
+  --primary: #c2410c;
+  --primary-foreground: #ffffff;
+  --primary-soft: #fbe5d6; /* recap chips, highlights */
+  --primary-soft-foreground: #9a3412;
+  --link: #a8360a; /* terracotta text on light surfaces */
+
+  /* Neutral UI */
+  --secondary: #f5ebdd;
+  --secondary-foreground: #1f2937;
+  --muted: #f5ebdd;
+  --muted-foreground: #6b5b4e;
+  --accent: #f5ebdd; /* hover backgrounds */
+  --accent-foreground: #1f2937;
+  --border: #e7d9c4;
+  --input: #d9c7ad;
+  --ring: #c2410c;
+
+  /* Feedback */
+  --destructive: #be123c;
+  --destructive-foreground: #ffffff;
+  --destructive-soft: #fadde3;
+  --destructive-soft-foreground: #9f1239;
+
+  --success: #166534;
+  --success-soft: #dcf0e0;
+  --warning: #854d0e;
+  --warning-soft: #fbebc4;
+  --info: #075985;
+  --info-soft: #dcebf5;
+  --teal: #0f766e;
+  --teal-soft: #d5efea;
+
+  /* Charts */
+  --chart-1: #c2410c;
+  --chart-2: #0f766e;
+  --chart-3: #ca8a04;
+  --chart-4: #1f2937;
+  --chart-5: #85766a;
+
+  /* Shadows (warm, soft) */
+  --shadow-sm: 0 1px 2px rgb(60 40 20 / 0.06);
+  --shadow-md: 0 4px 12px rgb(60 40 20 / 0.08);
+  --shadow-lg: 0 12px 32px rgb(60 40 20 / 0.12);
+}
+
+/* ---------- 3. Semantic tokens: DARK ---------- */
+.dark {
+  --background: #1b1815;
+  --foreground: #f5ebdd;
+  --card: #24201c;
+  --card-foreground: #f5ebdd;
+  --popover: #24201c;
+  --popover-foreground: #f5ebdd;
+
+  --primary: #f06a2e;
+  --primary-foreground: #1b1815;
+  --primary-soft: #3a2217;
+  --primary-soft-foreground: #f8b592;
+  --link: #f58a55;
+
+  --secondary: #2c2722;
+  --secondary-foreground: #f5ebdd;
+  --muted: #2c2722;
+  --muted-foreground: #a89a8b;
+  --accent: #332d27;
+  --accent-foreground: #f5ebdd;
+  --border: #3a332c;
+  --input: #4b3f36;
+  --ring: #f06a2e;
+
+  --destructive: #f59bb0;
+  --destructive-foreground: #1b1815;
+  --destructive-soft: #33181f;
+  --destructive-soft-foreground: #f59bb0;
+
+  --success: #86d19a;
+  --success-soft: #1d2a21;
+  --warning: #f2cc6b;
+  --warning-soft: #2e2713;
+  --info: #8cc8ee;
+  --info-soft: #16252f;
+  --teal: #7dd3c7;
+  --teal-soft: #14282a;
+
+  --chart-1: #f06a2e;
+  --chart-2: #5ec4b6;
+  --chart-3: #e5b84b;
+  --chart-4: #f5ebdd;
+  --chart-5: #a89a8b;
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 0.45);
+  --shadow-lg: 0 12px 32px rgb(0 0 0 / 0.55);
+}
+
+/* ---------- 4. Expose tokens to Tailwind utilities ---------- */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-soft-foreground: var(--primary-soft-foreground);
+  --color-link: var(--link);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-soft: var(--destructive-soft);
+  --color-destructive-soft-foreground: var(--destructive-soft-foreground);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+  --color-teal: var(--teal);
+  --color-teal-soft: var(--teal-soft);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 12px);
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ---------- 5. Base ---------- */
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: var(--primary-soft);
+    color: var(--primary-soft-foreground);
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ---------- 6. Topic status chips ----------
+   Usage: <span class="status-chip" data-status="PASSED">Passed</span>
+   Status is always paired with a text label (never color alone). */
+@layer components {
+  .status-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.125rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+    background: var(--chip-bg, var(--muted));
+    color: var(--chip-fg, var(--muted-foreground));
+  }
+  .status-chip[data-status="NOT_STARTED"] {
+    --chip-bg: var(--muted);
+    --chip-fg: var(--muted-foreground);
+  }
+  .status-chip[data-status="LEARNING"] {
+    --chip-bg: var(--info-soft);
+    --chip-fg: var(--info);
+  }
+  .status-chip[data-status="QUIZ_PENDING"] {
+    --chip-bg: var(--warning-soft);
+    --chip-fg: var(--warning);
+  }
+  .status-chip[data-status="PASSED"] {
+    --chip-bg: var(--success-soft);
+    --chip-fg: var(--success);
+  }
+  .status-chip[data-status="REVIEWING"] {
+    --chip-bg: var(--teal-soft);
+    --chip-fg: var(--teal);
+  }
+  .status-chip[data-status="MASTERED"] {
+    --chip-bg: var(--foreground);
+    --chip-fg: var(--background);
+  }
+  .status-chip[data-status="NEEDS_RECAP"] {
+    --chip-bg: var(--primary-soft);
+    --chip-fg: var(--primary-soft-foreground);
+  }
+  .status-chip[data-status="DEFERRED"] {
+    --chip-bg: transparent;
+    --chip-fg: var(--muted-foreground);
+    outline: 1px dashed var(--border);
+  }
 }
