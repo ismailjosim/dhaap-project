@@ -2,3 +2,4 @@ allowBuilds:
   sharp: false
   unrs-resolver: false
   protobufjs: false
+  esbuild: true
